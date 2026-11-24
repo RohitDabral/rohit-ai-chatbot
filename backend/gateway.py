@@ -88,8 +88,8 @@ class Gateway:
             return "The capital of France is Paris."
         if "hello" in lower or "hi" in lower:
             return "Hello! How can I assist you today?"
-        if "who are you" in lower:
-            return "I am an AI assistant powered by LiteLLM with automatic key failover and response caching."
+        if "who are you" in lower or "your name" in lower:
+            return "I am Rohit AI, an advanced AI assistant powered by LiteLLM with automatic key failover and response caching."
         return f"I have processed your request: '{last_msg}'. How else can I help?"
 
     def _execute_llm_call(
