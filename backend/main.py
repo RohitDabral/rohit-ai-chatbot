@@ -61,6 +61,17 @@ async def generic_exception_handler(request: Request, exc: Exception):
 # --- API Endpoints ---
 
 
+@app.get("/")
+async def root():
+  """Root endpoint returning basic service info."""
+  return {
+      "status": "ok",
+      "name": "Rohit AI - Resilient LLM Gateway",
+      "version": "1.0.0",
+      "endpoints": ["/health", "/chat", "/sessions/{session_id}/messages"],
+  }
+
+
 @app.get("/health", response_model=HealthResponse)
 async def health_check():
   """Returns 200 once app is running, DB reachable and key pool loaded."""
