@@ -13,7 +13,7 @@ class Settings:
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./data/app.db")
     ALLOWED_ORIGINS: str = os.getenv("ALLOWED_ORIGINS", "*")
     ENABLE_FAILURE_SIMULATION: bool = os.getenv("ENABLE_FAILURE_SIMULATION", "true").lower() in ("true", "1", "yes")
-    DEFAULT_MODEL: str = os.getenv("LLM_MODEL", "gemini/gemini-2.0-flash")
+    DEFAULT_MODEL: str = os.getenv("LLM_MODEL", "gemini/gemini-3-flash-preview")
     DEFAULT_SYSTEM_PROMPT: str = os.getenv("DEFAULT_SYSTEM_PROMPT", "You are Rohit AI, a helpful, highly intelligent, professional AI assistant.")
 
     @property
@@ -21,7 +21,7 @@ class Settings:
         raw = os.getenv("LLM_API_KEYS", "")
         keys = [k.strip() for k in raw.split(",") if k.strip()]
         if not keys:
-            # Fallback placeholder keys for local development if not provided
+            # Fallback placeholder keys if not provided in environment
             return ["key_1_placeholder", "key_2_placeholder"]
         return keys
 
@@ -31,9 +31,12 @@ class Settings:
         parsed = [m.strip() for m in raw_models.split(",") if m.strip()]
         keys_count = len(self.api_keys)
         if not parsed:
-            return [self.DEFAULT_MODEL] * keys_count
+            # Provide high-performance flash models for failover
+            defaults = ["gemini/gemini-3-flash-preview", "gemini/gemini-3.5-flash"]
+            if keys_count <= 2:
+                return defaults[:keys_count]
+            return defaults + [self.DEFAULT_MODEL] * (keys_count - len(defaults))
         if len(parsed) < keys_count:
-            # Pad with default model if fewer models than keys specified
             return parsed + [self.DEFAULT_MODEL] * (keys_count - len(parsed))
         return parsed[:keys_count]
 

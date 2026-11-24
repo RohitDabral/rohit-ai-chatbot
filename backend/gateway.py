@@ -148,12 +148,17 @@ class Gateway:
             api_key.startswith("your_")
         )
 
+        # Map deprecated or unavailable Gemini models to current responsive models
+        resolved_model = model
+        if any(m in model.lower() for m in ["gemini-2.0", "gemini-1.5", "gemini-2.5-flash-lite"]):
+            resolved_model = "gemini/gemini-3-flash-preview"
+
         if is_placeholder:
             # Realistic simulation using LiteLLM's mock_response
             reply = self._generate_mock_reply(messages)
             # Use LiteLLM completion with mock_response to exercise the LiteLLM pipeline
             resp = litellm.completion(
-                model=model,
+                model=resolved_model,
                 messages=messages,
                 mock_response=reply
             )
@@ -164,11 +169,16 @@ class Gateway:
             return reply, input_tokens, output_tokens
 
         # Real inference with LiteLLM
+        extra_kwargs = {}
+        if "gemini" in resolved_model.lower():
+            extra_kwargs["thinking"] = {"budget_tokens": 0}
+
         resp = litellm.completion(
-            model=model,
+            model=resolved_model,
             messages=messages,
             api_key=api_key,
-            timeout=25
+            timeout=25,
+            **extra_kwargs
         )
         reply = resp.choices[0].message.content or ""
         input_tokens = getattr(resp.usage, "prompt_tokens", None) or estimate_tokens(
