@@ -7,8 +7,8 @@ A production-grade, resilient AI chatbot built with **React** (frontend), **Pyth
 ## 1. Live URLs
 
 - **Frontend Application**: `https://lyftr-llm-chatbot.vercel.app` *(or your deployed Vercel/Cloudflare URL)*
-- **Backend API**: `https://lyftr-backend.onrender.com` *(or your deployed Render/Railway URL)*
-- **Interactive Swagger Docs**: `https://lyftr-backend.onrender.com/docs`
+- **Backend API**: `https://rohit-ai-chatbot-fmp2.onrender.com`
+- **Interactive Swagger Docs**: `https://rohit-ai-chatbot-fmp2.onrender.com/docs`
 - **GitHub Repository**: `https://github.com/RohitDabral/rohit-ai-chatbot`
 - **Demo Video (2–3 minutes)**: `https://youtu.be/demo-video-link`
 
