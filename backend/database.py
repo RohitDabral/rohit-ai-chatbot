@@ -122,6 +122,14 @@ class Database:
             result.append(msg)
         return result
 
+    def delete_session(self, session_id: str) -> bool:
+        """Deletes all messages stored for a given session."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM messages WHERE session_id = ?", (session_id,))
+            conn.commit()
+            return cursor.rowcount > 0
+
     def check_health(self) -> bool:
         """Verify database reachability."""
         try:

@@ -149,6 +149,13 @@ async def get_session_messages(session_id: str):
   return SessionHistoryResponse(session_id=session_id, messages=history)
 
 
+@app.delete("/sessions/{session_id}")
+async def delete_session(session_id: str):
+  """Deletes stored history for a session from SQLite."""
+  db.delete_session(session_id)
+  return {"status": "ok", "message": f"Session {session_id} deleted"}
+
+
 if __name__ == "__main__":
   import uvicorn
 

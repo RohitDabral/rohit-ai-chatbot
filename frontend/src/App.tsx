@@ -101,6 +101,35 @@ export const App: React.FC = () => {
     }
   };
 
+  const handleDeleteSession = async (sid: string) => {
+    // 1. Remove from session list in state & localStorage
+    const updated = sessions.filter((s) => s !== sid);
+    setSessions(updated);
+    localStorage.setItem('rohit_ai_sessions', JSON.stringify(updated));
+
+    // 2. If deleting the currently open session, switch to another or start fresh
+    if (sid === sessionId) {
+      if (updated.length > 0) {
+        handleSelectSession(updated[0]);
+      } else {
+        const newId = generateSessionId();
+        setSessionId(newId);
+        setMessages([]);
+        setSessions([newId]);
+        localStorage.setItem('rohit_ai_sessions', JSON.stringify([newId]));
+      }
+    }
+
+    // 3. Delete from backend SQLite database
+    try {
+      await fetch(`${API_BASE_URL}/sessions/${sid}`, {
+        method: 'DELETE',
+      });
+    } catch (e) {
+      console.warn('Failed to delete session on backend:', e);
+    }
+  };
+
   const handleSendMessage = async (text: string) => {
     if (!text.trim() || isLoading) return;
 
@@ -193,6 +222,7 @@ export const App: React.FC = () => {
         currentSessionId={sessionId}
         sessions={sessions}
         onSelectSession={handleSelectSession}
+        onDeleteSession={handleDeleteSession}
         onNewChat={handleNewSession}
         health={health}
         onOpenSystemPrompt={() => setIsSystemModalOpen(true)}
@@ -204,6 +234,7 @@ export const App: React.FC = () => {
           sidebarOpen={sidebarOpen}
           onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
           onNewSession={handleNewSession}
+          onDeleteCurrentSession={() => handleDeleteSession(sessionId)}
           simulateFailure={simulateFailure}
           onSelectSimulateFailure={setSimulateFailure}
         />
