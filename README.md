@@ -9,7 +9,7 @@ A production-grade, resilient AI chatbot built with **React** (frontend), **Pyth
 - **Frontend Application**: `https://lyftr-llm-chatbot.vercel.app` *(or your deployed Vercel/Cloudflare URL)*
 - **Backend API**: `https://lyftr-backend.onrender.com` *(or your deployed Render/Railway URL)*
 - **Interactive Swagger Docs**: `https://lyftr-backend.onrender.com/docs`
-- **GitHub Repository**: `https://github.com/rohit/lyftr-llm-chatbot`
+- **GitHub Repository**: `https://github.com/RohitDabral/rohit-ai-chatbot`
 - **Demo Video (2–3 minutes)**: `https://youtu.be/demo-video-link`
 
 ---
@@ -22,8 +22,8 @@ The entire full-stack application (frontend, backend, and persistent SQLite volu
 
 ```bash
 # Clone the repository
-git clone https://github.com/rohit/lyftr-llm-chatbot.git
-cd lyftr-llm-chatbot
+git clone https://github.com/RohitDabral/rohit-ai-chatbot.git
+cd rohit-ai-chatbot
 
 # Copy environment variables template
 cp .env.example .env
