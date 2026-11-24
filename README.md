@@ -7,8 +7,8 @@ A production-grade, resilient AI chatbot built with **React** (frontend), **Pyth
 ## 1. Live URLs
 
 - **Frontend Application**: `https://rohit-ai-chatbot-dy9d.vercel.app`
-- **Backend API**: `https://rohit-ai-chatbot-fmp2.onrender.com`
-- **Interactive Swagger Docs**: `https://rohit-ai-chatbot-fmp2.onrender.com/docs`
+- **Backend API**: `https://rohit-ai-chatbot-fap2.onrender.com`
+- **Interactive Swagger Docs**: `https://rohit-ai-chatbot-fap2.onrender.com/docs`
 - **GitHub Repository**: `https://github.com/RohitDabral/rohit-ai-chatbot`
 - **Demo Video (2–3 minutes)**: `https://youtu.be/demo-video-link`
 
