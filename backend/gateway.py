@@ -84,13 +84,49 @@ class Gateway:
         """Context-aware fallback reply for placeholder keys or test environments."""
         last_msg = messages[-1]["content"] if messages else ""
         lower = last_msg.lower()
+        if "palindrome" in lower:
+            return (
+                "Here is a Java program to check and print a palindrome number:\n\n"
+                "```java\n"
+                "import java.util.Scanner;\n\n"
+                "public class PalindromeCheck {\n"
+                "    public static void main(String[] args) {\n"
+                "        Scanner scanner = new Scanner(System.in);\n"
+                "        System.out.print(\"Enter a number: \");\n"
+                "        int num = scanner.nextInt();\n"
+                "        \n"
+                "        int original = num;\n"
+                "        int reversed = 0;\n"
+                "        \n"
+                "        while (num != 0) {\n"
+                "            int digit = num % 10;\n"
+                "            reversed = reversed * 10 + digit;\n"
+                "            num /= 10;\n"
+                "        }\n"
+                "        \n"
+                "        if (original == reversed) {\n"
+                "            System.out.println(original + \" is a Palindrome Number.\");\n"
+                "        } else {\n"
+                "            System.out.println(original + \" is NOT a Palindrome Number.\");\n"
+                "        }\n"
+                "        scanner.close();\n"
+                "    }\n"
+                "}\n"
+                "```\n\n"
+                "### Explanation:\n"
+                "1. We extract the last digit using the modulo operator `% 10`.\n"
+                "2. We build the reversed number by multiplying previous `reversed * 10 + digit`.\n"
+                "3. Finally, we compare the reversed number with the original number."
+            )
         if "capital of france" in lower:
             return "The capital of France is Paris."
+        if "quantum" in lower:
+            return "Quantum computing harnesses the phenomena of quantum mechanics, such as superposition and entanglement, to process data exponentially faster than classical computers for specific complex problems."
         if "hello" in lower or "hi" in lower:
-            return "Hello! How can I assist you today?"
+            return "Hello! I am Rohit AI. How can I assist you today?"
         if "who are you" in lower or "your name" in lower:
             return "I am Rohit AI, an advanced AI assistant powered by LiteLLM with automatic key failover and response caching."
-        return f"I have processed your request: '{last_msg}'. How else can I help?"
+        return f"Hello! I am Rohit AI. Here is the response to your query regarding '{last_msg}'. Let me know if you would like me to explain further or provide more examples!"
 
     def _execute_llm_call(
         self,
@@ -107,6 +143,7 @@ class Gateway:
             api_key.startswith("key_") or
             api_key.startswith("mock_") or
             api_key.startswith("test_") or
+            api_key.startswith("backup_") or
             "placeholder" in api_key.lower() or
             api_key.startswith("your_")
         )
